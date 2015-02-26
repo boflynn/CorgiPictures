@@ -1,26 +1,20 @@
-﻿using System.Web.Mvc;
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using CorgiPictures.Model;
 
 namespace CorgiPictures.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private CorgiPicturesContext db = new CorgiPicturesContext();
+
+        public async Task<ActionResult> Index()
         {
-            return View();
-        }
+            var pictures = db.Pictures.OrderByDescending(p => p.Created).Take(10).AsQueryable();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(await pictures.ToListAsync());
         }
     }
 }
