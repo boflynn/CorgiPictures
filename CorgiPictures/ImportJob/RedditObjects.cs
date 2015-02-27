@@ -1,28 +1,41 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace CorgiPictures.ImportJob
 {
-    public class Data2
-    {
-        public string domain { get; set; }
-        public string id { get; set; }
-        public string url { get; set; }
-        public string title { get; set; }
-        public long created_utc { get; set; }
-    }
-
-    public class Child
-    {
-        public Data2 data { get; set; }
-    }
-
-    public class Data
-    {
-        public List<Child> children { get; set; }
-    }
-
     public class RootObject
     {
-        public Data data { get; set; }
+        [JsonProperty("data")]
+        public RootChild Data { get; set; }
+
+        public class RootChild
+        {
+            [JsonProperty("children")]
+            public List<Child> Children { get; set; }
+
+            public class Child
+            {
+                [JsonProperty("data")]
+                public Data2 Data { get; set; }
+
+                public class Data2
+                {
+                    [JsonProperty("domain")]
+                    public string Domain { get; set; }
+
+                    [JsonProperty("id")]
+                    public string Id { get; set; }
+
+                    [JsonProperty("url")]
+                    public string Url { get; set; }
+
+                    [JsonProperty("title")]
+                    public string Title { get; set; }
+
+                    [JsonProperty("created_utc")]
+                    public long Created { get; set; }
+                }
+            }
+        }
     }
 }

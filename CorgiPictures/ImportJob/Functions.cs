@@ -25,15 +25,15 @@ namespace CorgiPictures.ImportJob
                 stuff = JsonConvert.DeserializeObject<RootObject>(json);
             }
 
-            foreach (var d in stuff.data.children.Where(d => d.data.domain.Contains("i.imgur.com") && d.data.created_utc > Program.lastUtc))
+            foreach (var d in stuff.Data.Children.Where(d => d.Data.Domain.Contains("i.imgur.com") && d.Data.Created > Program.lastUtc))
             {
-                var dd = d.data;
+                var dd = d.Data;
 
                 using (var httpClient = new HttpClient())
                 {
-                    var ext = dd.url.Substring(dd.url.LastIndexOf("."), dd.url.Length - dd.url.LastIndexOf("."));
-                    var blobName = string.Format("{0}{1}", dd.id, ext);
-                    var thumbName = string.Format("{0}-thumb{1}", dd.id, ext);
+                    var ext = dd.Url.Substring(dd.Url.LastIndexOf("."), dd.Url.Length - dd.Url.LastIndexOf("."));
+                    var blobName = string.Format("{0}{1}", dd.Id, ext);
+                    var thumbName = string.Format("{0}-thumb{1}", dd.Id, ext);
 
                     Console.WriteLine(blobName);
 
@@ -43,7 +43,7 @@ namespace CorgiPictures.ImportJob
                         continue;
                     }
 
-                    var content = await httpClient.GetByteArrayAsync(dd.url);
+                    var content = await httpClient.GetByteArrayAsync(dd.Url);
 
                     var thumbnailContent = GenerateThumbnail(content);
 
@@ -57,9 +57,9 @@ namespace CorgiPictures.ImportJob
 
                     Program.db.Pictures.Add(new Picture
                     {
-                        Created = FromUnixTime(dd.created_utc),
+                        Created = FromUnixTime(dd.Created),
                         FileName = blobName,
-                        Title = dd.title.Length > 97 ? dd.title.Substring(0, 97) + "..." : dd.title,
+                        Title = dd.Title.Length > 97 ? dd.Title.Substring(0, 97) + "..." : dd.Title,
                         PictureUrl = blockBlob.Uri.ToString(),
                         ThumbnailUrl = thumbnailBlob.Uri.ToString()
                     });
