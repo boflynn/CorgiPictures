@@ -17,5 +17,10 @@ namespace CorgiPictures.Web.Controllers
 
             return View(pictures);
         }
+
+        public ActionResult About()
+        {
+            return View();
+        }
     }
 }
