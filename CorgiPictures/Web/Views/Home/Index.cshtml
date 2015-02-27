@@ -1,35 +1,24 @@
-﻿@model System.Collections.Generic.IEnumerable<CorgiPictures.Model.Picture>
+﻿@using GridMvc.Html
+@using GridMvc.Sorting
+@model IEnumerable<CorgiPictures.Model.Picture>
 
 @{
     ViewBag.Title = "Home Page";
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th>
-        </th>
-    </tr>
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(o => o.Title)
+            .Titled("Title");
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>asd
-            <td>
-                <a href="@Html.Raw(item.PictureUrl)" data-lightbox="image-1" data-title="My caption">
-                    <img class="picture-preview" src="@Html.Raw(item.ThumbnailUrl)" />
-                </a>
-            </td>
-        </tr>
-    }
-</table>
+    columns.Add(o => o.Created)
+            .Titled("Created")
+            .SortInitialDirection(GridSortDirection.Descending);
+
+    /* Adding "Vip customer" column: */
+    columns.Add()
+            .Encoded(false)
+            .Sanitized(false)
+            .RenderValueAs(o => "<a href=\"" + o.PictureUrl + "\" data-lightbox=\"image-1\" data-title=\"My caption\"><img class=\"picture-preview\" src=\"" + o.ThumbnailUrl + "\" /></a>");
+
+}).WithPaging(10).Sortable().Filterable().WithMultipleFilters()

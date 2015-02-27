@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+
 using CorgiPictures.Model;
 
 namespace CorgiPictures.Web.Controllers
@@ -10,11 +11,11 @@ namespace CorgiPictures.Web.Controllers
     {
         private CorgiPicturesContext db = new CorgiPicturesContext();
 
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var pictures = db.Pictures.OrderByDescending(p => p.Created).Take(10).AsQueryable();
+            var pictures = db.Pictures.OrderByDescending(p => p.Created).AsQueryable();
 
-            return View(await pictures.ToListAsync());
+            return View(pictures);
         }
     }
 }
