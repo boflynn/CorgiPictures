@@ -1,6 +1,4 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Web.Mvc;
 
 using CorgiPictures.Model;
@@ -9,7 +7,7 @@ namespace CorgiPictures.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private CorgiPicturesContext db = new CorgiPicturesContext();
+        private readonly CorgiPicturesContext db = new CorgiPicturesContext();
 
         public ActionResult Index()
         {
