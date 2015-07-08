@@ -14,7 +14,8 @@ namespace CorgiPictures.Web
                         "~/Scripts/gridmvc.min.js",
                         "~/Scripts/modernizr-*",
                         "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                        "~/Scripts/site.js",
+                        "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

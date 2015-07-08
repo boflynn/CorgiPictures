@@ -48,8 +48,7 @@ namespace CorgiPictures.ImportJob
         private static void InitializeStorage()
         {
             // Retrieve storage account from connection string.
-            var storageAccount =
-                CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["CorgiPicturesStorage"].ToString());
+            var storageAccount = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["CorgiPicturesStorage"].ToString());
 
             // Create the blob client.
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
